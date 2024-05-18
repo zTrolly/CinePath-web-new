@@ -1,1 +1,118 @@
-<p>home works!</p>
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">CinePath</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" (click)="changeRenderType('movie')">Movies</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="changeRenderType('tv')">TV Shows</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<main *ngIf="renderType === 'movie'" class="container my-4">
+  <h1>Movies</h1>
+  <div *ngIf="moviesPopular; else loading" class="row">
+    <h2 class="col-12">Popular Movies</h2>
+    <div *ngFor="let movie of moviesPopular?.results" class="col-md-3 mb-4">
+      <div class="card">
+        <img [src]="getContentImg(movie?.poster_path || '')" class="card-img-top" alt="{{ movie?.title }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ movie?.title }}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="movieNowPlaying" class="row">
+    <h2 class="col-12">Now Playing</h2>
+    <div *ngFor="let movie of movieNowPlaying?.results" class="col-md-3 mb-4">
+      <div class="card">
+        <img [src]="getContentImg(movie?.poster_path || '')" class="card-img-top" alt="{{ movie?.title }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ movie?.title }}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="movieLatest" class="row">
+    <h2 class="col-12">Latest Movie</h2>
+    <div class="col-md-3 mb-4">
+      <div class="card">
+        <img [src]="getContentImg(movieLatest?.poster_path || '')" class="card-img-top" alt="{{ movieLatest?.title }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ movieLatest?.title }}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="upcomingMovies" class="row">
+    <h2 class="col-12">Upcoming Movies</h2>
+    <div *ngFor="let movie of upcomingMovies?.results" class="col-md-3 mb-4">
+      <div class="card">
+        <img [src]="getContentImg(movie?.poster_path || '')" class="card-img-top" alt="{{ movie?.title }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ movie?.title }}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<main *ngIf="renderType === 'tv'" class="container my-4">
+  <h1>TV Shows</h1>
+  <div *ngIf="tvPopular; else loading" class="row">
+    <h2 class="col-12">Popular TV Shows</h2>
+    <div *ngFor="let tvShow of tvPopular?.results" class="col-md-3 mb-4">
+      <div class="card">
+        <img [src]="getContentImg(tvShow?.poster_path || '')" class="card-img-top" alt="{{ tvShow?.name }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ tvShow?.name }}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="tvTopRated" class="row">
+    <h2 class="col-12">Top Rated TV Shows</h2>
+    <div *ngFor="let tvShow of tvTopRated?.results" class="col-md-3 mb-4">
+      <div class="card">
+        <img [src]="getContentImg(tvShow?.poster_path || '')" class="card-img-top" alt="{{ tvShow?.name }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ tvShow?.name }}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="tvLatest" class="row">
+    <h2 class="col-12">Latest TV Show</h2>
+    <div class="col-md-3 mb-4">
+      <div class="card">
+        <img [src]="getContentImg(tvLatest?.poster_path || '')" class="card-img-top" alt="{{ tvLatest?.name }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ tvLatest?.name }}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="tvAiringToday" class="row">
+    <h2 class="col-12">TV Shows Airing Today</h2>
+    <div *ngFor="let tvShow of tvAiringToday?.results" class="col-md-3 mb-4">
+      <div class="card">
+        <img [src]="getContentImg(tvShow?.poster_path || '')" class="card-img-top" alt="{{ tvShow?.name }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ tvShow?.name }}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<ng-template #loading>
+  <p>Loading...</p>
+</ng-template>
