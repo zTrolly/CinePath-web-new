@@ -1,8 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MovieDb } from '../../services/movieDb';
 import { environment } from '../../../environments/environment';
-import { MovieNowPlayingResponse, MovieResponse, PopularMoviesResponse, ShowResponse, TvResultsResponse, UpcomingMoviesResponse } from '../../types/request-types';
+import { MovieNowPlayingResponse, MovieResponse, PopularMoviesResponse, ShowResponse, TopRatedMoviesResponse, TvResultsResponse, UpcomingMoviesResponse } from '../../types/request-types';
+import { ContentCardComponent } from '../../components/CompoundComponents/content-card/content-card.component';
+
+import { MatListModule} from '@angular/material/list';
+import { ContentListComponent } from '../../components/CompoundComponents/content-list/content-list.component';
+import { ContentListShowComponent } from '../../components/CompoundComponents/content-list-show/content-list-show.component';
 
 type HomeComponentRenderType = 'movie' | 'tv' | 'animation';
 const movieDb = new MovieDb(environment.api_key);
@@ -10,20 +15,22 @@ const movieDb = new MovieDb(environment.api_key);
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ContentCardComponent, MatListModule, ContentListComponent, ContentListShowComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
   moviesPopular: PopularMoviesResponse | null = null;
   movieNowPlaying: MovieNowPlayingResponse | null = null;
-  movieLatest: MovieResponse | null = null;
+  topRated: TopRatedMoviesResponse | null = null;
   upcomingMovies: UpcomingMoviesResponse | null = null;
 
   tvLatest: ShowResponse | null = null;
   tvPopular: TvResultsResponse | null = null;
   tvTopRated: TvResultsResponse | null = null;
   tvAiringToday: TvResultsResponse | null = null;
+
+
 
   getContentImg = (path: string) => `https://image.tmdb.org/t/p/w500${path}`;
   renderType: HomeComponentRenderType = 'movie';
@@ -45,12 +52,28 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  
   fetchAllMovieData = async () => {
     try {
       this.moviesPopular = await movieDb.moviePopular();
       this.movieNowPlaying = await movieDb.movieNowPlaying();
-      this.movieLatest = await movieDb.movieLatest();
+      this.topRated = await movieDb.movieTopRated();
       this.upcomingMovies = await movieDb.upcomingMovies({ region: 'BR' });
+
+      if (this.moviesPopular) {
+        this.moviesPopular.results = this.moviesPopular.results?.filter((movie) => movie.poster_path);
+      }
+
+      if (this.movieNowPlaying) {
+        this.movieNowPlaying.results = this.movieNowPlaying.results?.filter((movie) => movie.poster_path);
+      }
+
+      if (this.upcomingMovies) {
+        this.upcomingMovies.results = this.upcomingMovies.results?.filter((movie) => movie.poster_path);
+      }
+      
+
+    
     } catch (error) {
       console.error('Error fetching movie data', error);
     }
@@ -59,7 +82,7 @@ export class HomeComponent implements OnInit {
   cleanMovieData = () => {
     this.moviesPopular = null;
     this.movieNowPlaying = null;
-    this.movieLatest = null;
+    this.topRated = null;
     this.upcomingMovies = null;
   }
 
@@ -80,6 +103,7 @@ export class HomeComponent implements OnInit {
     this.tvTopRated = null;
     this.tvAiringToday = null;
   }
+console: any;
 
   constructor() { }
 

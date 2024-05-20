@@ -1,0 +1,15 @@
+<div class="col-8" style="margin: 0 auto;">
+  <div *ngIf="list; else loading" class="row">
+
+    <h2 class="section-title">{{title}}</h2>
+
+    <div class="list-container" #scrollContainer>
+      <app-content-card *ngFor="let movie of list" class="col-md-2 mb-4" [img]="getContentImg(movie?.poster_path || '')" [title]="movie?.title || 'No title'" [rating]="movie?.vote_average || 0" (click)="consoleContent" [year]="movie.release_date || ''">
+      </app-content-card>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <p>Loading...</p>
+</ng-template>

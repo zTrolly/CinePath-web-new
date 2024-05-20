@@ -17,100 +17,16 @@
   </nav>
 </header>
 
-<main *ngIf="renderType === 'movie'" class="container my-4">
-  <h1>Movies</h1>
-  <div *ngIf="moviesPopular; else loading" class="row">
-    <h2 class="col-12">Popular Movies</h2>
-    <div *ngFor="let movie of moviesPopular?.results" class="col-md-3 mb-4">
-      <div class="card">
-        <img [src]="getContentImg(movie?.poster_path || '')" class="card-img-top" alt="{{ movie?.title }}">
-        <div class="card-body">
-          <h5 class="card-title">{{ movie?.title }}</h5>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div *ngIf="movieNowPlaying" class="row">
-    <h2 class="col-12">Now Playing</h2>
-    <div *ngFor="let movie of movieNowPlaying?.results" class="col-md-3 mb-4">
-      <div class="card">
-        <img [src]="getContentImg(movie?.poster_path || '')" class="card-img-top" alt="{{ movie?.title }}">
-        <div class="card-body">
-          <h5 class="card-title">{{ movie?.title }}</h5>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div *ngIf="movieLatest" class="row">
-    <h2 class="col-12">Latest Movie</h2>
-    <div class="col-md-3 mb-4">
-      <div class="card">
-        <img [src]="getContentImg(movieLatest?.poster_path || '')" class="card-img-top" alt="{{ movieLatest?.title }}">
-        <div class="card-body">
-          <h5 class="card-title">{{ movieLatest?.title }}</h5>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div *ngIf="upcomingMovies" class="row">
-    <h2 class="col-12">Upcoming Movies</h2>
-    <div *ngFor="let movie of upcomingMovies?.results" class="col-md-3 mb-4">
-      <div class="card">
-        <img [src]="getContentImg(movie?.poster_path || '')" class="card-img-top" alt="{{ movie?.title }}">
-        <div class="card-body">
-          <h5 class="card-title">{{ movie?.title }}</h5>
-        </div>
-      </div>
-    </div>
-  </div>
+<main *ngIf="renderType === 'movie'" style="width: 100%; height: 100%;justify-content: center;">
+  <app-content-list [list]="moviesPopular?.results ?? []" title="Recomendado"></app-content-list>
+  <app-content-list [list]="topRated?.results ?? []" title="Melhor Avaliado"></app-content-list>
+  <app-content-list [list]="upcomingMovies?.results ?? []" title="Está por Vir"></app-content-list>
 </main>
 
-<main *ngIf="renderType === 'tv'" class="container my-4">
-  <h1>TV Shows</h1>
-  <div *ngIf="tvPopular; else loading" class="row">
-    <h2 class="col-12">Popular TV Shows</h2>
-    <div *ngFor="let tvShow of tvPopular?.results" class="col-md-3 mb-4">
-      <div class="card">
-        <img [src]="getContentImg(tvShow?.poster_path || '')" class="card-img-top" alt="{{ tvShow?.name }}">
-        <div class="card-body">
-          <h5 class="card-title">{{ tvShow?.name }}</h5>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div *ngIf="tvTopRated" class="row">
-    <h2 class="col-12">Top Rated TV Shows</h2>
-    <div *ngFor="let tvShow of tvTopRated?.results" class="col-md-3 mb-4">
-      <div class="card">
-        <img [src]="getContentImg(tvShow?.poster_path || '')" class="card-img-top" alt="{{ tvShow?.name }}">
-        <div class="card-body">
-          <h5 class="card-title">{{ tvShow?.name }}</h5>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div *ngIf="tvLatest" class="row">
-    <h2 class="col-12">Latest TV Show</h2>
-    <div class="col-md-3 mb-4">
-      <div class="card">
-        <img [src]="getContentImg(tvLatest?.poster_path || '')" class="card-img-top" alt="{{ tvLatest?.name }}">
-        <div class="card-body">
-          <h5 class="card-title">{{ tvLatest?.name }}</h5>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div *ngIf="tvAiringToday" class="row">
-    <h2 class="col-12">TV Shows Airing Today</h2>
-    <div *ngFor="let tvShow of tvAiringToday?.results" class="col-md-3 mb-4">
-      <div class="card">
-        <img [src]="getContentImg(tvShow?.poster_path || '')" class="card-img-top" alt="{{ tvShow?.name }}">
-        <div class="card-body">
-          <h5 class="card-title">{{ tvShow?.name }}</h5>
-        </div>
-      </div>
-    </div>
-  </div>
+<main *ngIf="renderType === 'tv'" style="width: 100%; height: 100%;justify-content: center;">
+  <app-content-list-show [list]="tvAiringToday?.results ?? []" title="No ar"></app-content-list-show>
+  <app-content-list-show [list]="tvPopular?.results ?? []" title="Popular"></app-content-list-show>
+  <app-content-list-show [list]="tvTopRated?.results ?? []" title="Melhor Avaliado"></app-content-list-show>
 </main>
 
 <ng-template #loading>
