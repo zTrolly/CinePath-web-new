@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MovieResult } from '../../../types/request-types';
-import { ContentCardComponent } from '../content-card/content-card.component';
+import { ContentCardComponent } from '../../SimpleComponents/content-card/content-card.component';
 import { CommonModule } from '@angular/common';
 
 @Component({

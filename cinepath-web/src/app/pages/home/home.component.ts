@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MovieDb } from '../../services/movieDb';
 import { environment } from '../../../environments/environment';
 import { MovieNowPlayingResponse, MovieResponse, PopularMoviesResponse, ShowResponse, TopRatedMoviesResponse, TvResultsResponse, UpcomingMoviesResponse } from '../../types/request-types';
-import { ContentCardComponent } from '../../components/CompoundComponents/content-card/content-card.component';
+import { ContentCardComponent } from '../../components/SimpleComponents/content-card/content-card.component';
 
 import { MatListModule} from '@angular/material/list';
 import { ContentListComponent } from '../../components/CompoundComponents/content-list/content-list.component';
