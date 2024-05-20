@@ -7,6 +7,7 @@ import { MovieNowPlayingResponse,  PopularMoviesResponse, ShowResponse, TopRated
 import { MatListModule} from '@angular/material/list';
 import { ContentListComponent } from '../../components/CompoundComponents/content-list/content-list.component';
 import { ContentListShowComponent } from '../../components/CompoundComponents/content-list-show/content-list-show.component';
+import { ContentCarrouselComponent } from '../../components/CompoundComponents/content-carrousel/content-carrousel.component';
 
 type HomeComponentRenderType = 'movie' | 'tv' | 'animation';
 const movieDb = new MovieDb(environment.api_key);
@@ -14,7 +15,7 @@ const movieDb = new MovieDb(environment.api_key);
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule,  MatListModule, ContentListComponent, ContentListShowComponent],
+  imports: [CommonModule,  MatListModule, ContentListComponent, ContentListShowComponent, ContentCarrouselComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
@@ -54,9 +55,9 @@ export class HomeComponent implements OnInit {
   
   fetchAllMovieData = async () => {
     try {
-      this.moviesPopular = await movieDb.moviePopular();
-      this.movieNowPlaying = await movieDb.movieNowPlaying();
-      this.topRated = await movieDb.movieTopRated();
+      this.moviesPopular = await movieDb.moviePopular({language: 'pt-BR'});
+      this.movieNowPlaying = await movieDb.movieNowPlaying({language: 'pt-BR'});
+      this.topRated = await movieDb.movieTopRated({language: 'pt-BR'});
       this.upcomingMovies = await movieDb.upcomingMovies({ region: 'BR' });
 
       if (this.moviesPopular) {
