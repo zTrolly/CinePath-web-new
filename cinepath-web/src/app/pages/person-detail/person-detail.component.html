@@ -1,1 +1,27 @@
-<p>person-detail works!</p>
+<div class="col-12 container" style="margin-top: 10px;">
+  <div class="row" style="gap: 0.3rem; justify-content: center;">
+    <div class="col-3" style="display: flex; flex-direction: column; align-items: center;">
+      <img [src]="getImageUrl(personInfo?.profile_path || '')" alt="Profile image" width="350px" height="500px" />
+      <div style="background-color: #454545; color: white; padding: .5rem; width:350px">
+        <p style="font-size: x-large; text-align: center;">Informações Pessoais</p>
+        <p style="font-size: large;">Creditado em: {{ (personCredits?.cast?.length) }}</p>
+        <p style="font-size: large;">Gênero: {{ personInfo?.gender}} </p>
+        <p style="font-size: large;">Data de Nascimento: {{ personInfo?.birthday }}</p>
+        <p style="font-size: large;">Local de Nascimento: {{ personInfo?.place_of_birth }}</p>
+
+      </div>
+    </div>
+    <div class="col-8">
+      <div style="width: 80%;">
+        <h1 style="color: white; font-size: xx-large;">{{ personInfo?.name }}</h1>
+        <p style="color: white;">{{ personInfo?.biography }}</p>
+      </div>
+      <div style="display: flex; flex-wrap: wrap;">
+        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;" class="col-12">
+          <app-content-card class="col-md-3 mb-4" *ngFor="let content of personCredits?.cast" [title]="content.name || content.title || ''" [year]="content.release_date || content.first_air_date ||''" [rating]="content.vote_average || 0" [img]="getImageUrl(content.poster_path || ''  )" [id]="content.id || 0" [type]="getMediaType(content.media_type || '')"></app-content-card>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

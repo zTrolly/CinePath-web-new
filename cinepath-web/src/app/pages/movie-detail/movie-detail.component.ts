@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CreditsResponse, KeywordResponse, MovieKeywordResponse, MovieResponse, MovieReviewsResponse, VideosResponse } from '../../types/request-types';
 import { MovieDb } from '../../services/movieDb';
@@ -31,7 +31,7 @@ export class MovieDetailComponent implements OnInit {
 
   movieDb = new MovieDb(environment.api_key);
 
-  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer) {}
+  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private router: Router) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -44,6 +44,10 @@ export class MovieDetailComponent implements OnInit {
         this.getMovieVideos();
       }
     });
+  }
+
+  goToPersonDetail = (id: number) => {
+    this.router.navigate(['/person', id]);
   }
 
   getMovieImg = (path: string): string => {  

@@ -67,7 +67,7 @@
         <h2 class="section-title">Elenco</h2>
         <div class="list-container" #scrollContainer style="padding: 2rem; overflow: scroll;">
           @for (item of movieCredits?.cast; track $index) {
-          <div>
+          <div (click)="goToPersonDetail(item.id || 0)">
             <img src="{{getMovieImg(item.profile_path || '')}}" width="200px" height="300px" style="object-fit: cover; border-radius: 5px; margin-right: 1rem;">
             <p style="font-size: large; color: white; margin-top: 0.5rem; width: 100%; margin-bottom: 0.1rem;"><strong>{{ item.name }}</strong></p>
             <p style="font-size: small; color: white; margin-top: 0.1rem; width: 100%;">{{ item.character?.replace('(uncredited)', '')?.split('/', 1) }}</p>
@@ -109,7 +109,7 @@
       <div>
         <h2 style="font-size: x-large; align-self: center;">Gêneros</h2>
         <div class="side-bar__info__item" style="display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; justify-content: center; align-items: center;">
-          @for (item of movieInfo?.genres; track $index) {
+          @for (item of movieInfo.genres; track $index) {
           <span style="background-color: #BF89F2; padding: 0.2rem; border-radius: 5px;">{{ item.name?.toUpperCase() }}</span>
           }
         </div>

@@ -1,1 +1,24 @@
-<p>search works!</p>
+<!-- search.component.html -->
+<div class="search-container">
+  <input [(ngModel)]="searchQuery" placeholder="Digite sua busca" />
+  <button (click)="search()">Buscar</button>
+
+  <div *ngIf="multiSearchResult">
+    <div *ngIf="movieResult.length > 0">
+      <h1 class="section-title" style="font-size: xx-large; color: white;">Filmes</h1>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;" class="col-12">
+        <app-content-card class="col-md-2 mb-4" *ngFor="let movie of movieResult" [title]="movie.title || ''" [year]="movie.release_date || ''" [rating]="movie.vote_average || 0" [img]="movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : 'assets/no-image.png'" [id]="movie.id || 0" [type]="'movie'"></app-content-card>
+      </div>
+
+    </div>
+  </div>
+
+  <div *ngIf="tvShowResult.length > 0">
+    <h1 class="section-title" style="font-size: xx-large; color: white;">Séries</h1>
+    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;" class="col-12">
+      <app-content-card class="col-md-2 mb-4" *ngFor="let tvShow of tvShowResult" [title]="tvShow.name || ''" [year]="tvShow.first_air_date || ''" [rating]="tvShow.vote_average || 0" [img]="tvShow.poster_path ? 'https://image.tmdb.org/t/p/w500' + tvShow.poster_path : 'assets/no-image.png'" [id]="tvShow.id || 0" [type]="'tv-show'"></app-content-card>
+
+
+    </div>
+
+  </div>

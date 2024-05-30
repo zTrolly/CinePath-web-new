@@ -637,7 +637,21 @@ export class MovieDb {
   episodeVideos(params: types.EpisodeRequest, axiosConfig?: AxiosRequestConfig): Promise<types.VideosResponse> {
     return this.makeRequest(HttpMethod.Get, 'tv/:id/season/:season_number/episode/:episode_number/videos', params, axiosConfig)
   }
-    
+
+  personDetails(
+    params: string | number | types.IdAppendToResponseRequest,
+    axiosConfig?: AxiosRequestConfig,
+  ): Promise<types.Person> {
+    return this.makeRequest(HttpMethod.Get, 'person/:id', params, axiosConfig)
+  }
+
+  personCredits(
+    params: string | number | types.IdRequestParams,
+    axiosConfig?: AxiosRequestConfig,
+  ): Promise<types.CreditsResponse> {
+    return this.makeRequest(HttpMethod.Get, 'person/:id/combined_credits', params, axiosConfig)
+  }
+  
 }
 
  

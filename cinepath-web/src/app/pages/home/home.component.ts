@@ -8,6 +8,7 @@ import { MatListModule} from '@angular/material/list';
 import { ContentListComponent } from '../../components/CompoundComponents/content-list/content-list.component';
 import { ContentListShowComponent } from '../../components/CompoundComponents/content-list-show/content-list-show.component';
 import { ContentCarrouselComponent } from '../../components/CompoundComponents/content-carrousel/content-carrousel.component';
+import { Router } from '@angular/router';
 
 type HomeComponentRenderType = 'movie' | 'tv' | 'animation';
 const movieDb = new MovieDb(environment.api_key);
@@ -52,6 +53,9 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  goToSearch = () => {
+    this.router.navigate(['/search']);
+  }
   
   fetchAllMovieData = async () => {
     try {
@@ -105,7 +109,7 @@ export class HomeComponent implements OnInit {
   }
 console: any;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   async ngOnInit() {
     await this.fetchAllMovieData();

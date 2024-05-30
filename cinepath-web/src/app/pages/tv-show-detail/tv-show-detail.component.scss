@@ -1,0 +1,77 @@
+.card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card-img-top {
+  height: 350px;
+  object-fit: cover;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+}
+
+.scroll-buttons {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  z-index: 1;
+}
+
+.list-container {
+  display: flex;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 0;
+  scroll-behavior: smooth;
+  scrollbar-width: thin; /* Firefox */
+}
+
+.list-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.list-container::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 4px;
+}
+
+.list-container > app-content-card {
+  flex: 0 0 auto;
+  margin-right: 10px;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 1rem 0;
+  color: white;
+}
+
+:host ::ng-deep .mat-mdc-tab .mdc-tab__text-label {
+  color: white;
+  display: inline-flex;
+  align-items: center;
+}
+
+:host ::ng-deep .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+  color: var(--mat-tab-header-active-label-text-color);
+}
+
+:host ::ng-deep .mat-mdc-tab-bar {
+  background-color: var(--mat-tab-header-background);
+}
