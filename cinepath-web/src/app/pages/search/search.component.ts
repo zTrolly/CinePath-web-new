@@ -24,7 +24,7 @@ export class SearchComponent implements OnInit {
   tvShowResult: TvResult[] = [];
   personResult: PersonResult[] = [];
 
-  searchQuery: string = 'game of thrones';
+  searchQuery: string = '';
 
   ngOnInit() {
     this.search();
@@ -32,7 +32,7 @@ export class SearchComponent implements OnInit {
 
   search = async () => {
     if (this.searchQuery) {
-      this.multiSearchResult = await this.movieDb.searchMulti({query: this.searchQuery, include_adult: true, region: 'EN', language: 'pt-BR'});
+      this.multiSearchResult = await this.movieDb.searchMulti({query: this.searchQuery, include_adult: false, region: 'EN', language: 'pt-BR'});
       if (this.multiSearchResult.results) {
         this.movieResult = this.multiSearchResult.results.filter((result) => result.media_type === 'movie') as MovieResult[];
         this.tvShowResult = this.multiSearchResult.results.filter((result) => result.media_type === 'tv') as TvResult[];
