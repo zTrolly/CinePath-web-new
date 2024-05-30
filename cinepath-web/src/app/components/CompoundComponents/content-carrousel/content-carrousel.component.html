@@ -1,5 +1,5 @@
 @if (movies && movies.length > 0) {
-<ngb-carousel *ngIf="images">
+<ngb-carousel *ngIf="images" [showNavigationArrows]="false">
   <ng-template ngbSlide *ngFor="let movie of movies">
     <app-content-carrousel-info [movie]="movie"></app-content-carrousel-info>
 

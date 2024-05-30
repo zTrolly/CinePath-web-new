@@ -1,4 +1,4 @@
-<div class="content-card card" (click)="onClick()">
+<div class="content-card card" (click)="navigateToDetailPage()">
   <img [src]="img" [alt]="title" class="card-img-top" />
   <div class="card-content-wrapper">
     <div class="card-body">
@@ -10,10 +10,7 @@
       <div class="card-rating">
         <mat-icon aria-hidden="false" (aria-label)="{rating}" fontIcon="star" style="color: white; width: 30;"></mat-icon>
         <p class="card-text">{{ rating.toFixed(1) }}</p>
-
       </div>
-
     </div>
   </div>
-
 </div>

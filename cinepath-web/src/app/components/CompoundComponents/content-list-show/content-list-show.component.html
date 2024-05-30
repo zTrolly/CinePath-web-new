@@ -4,7 +4,7 @@
     <h2 class="section-title">{{title}}</h2>
 
     <div class="list-container" #scrollContainer>
-      <app-content-card *ngFor="let tvShow of list" class="col-md-2 mb-4" [img]="getContentImg(tvShow?.poster_path || '')" [title]="tvShow?.name || 'No title'" [rating]="tvShow?.vote_average || 0" (click)="consoleContent" [year]="tvShow.first_air_date || ''">
+      <app-content-card *ngFor="let tvShow of list" class="col-md-3 mb-4" [img]="getContentImg(tvShow?.poster_path || '')" [title]="tvShow?.name || 'No title'" [rating]="tvShow?.vote_average || 0" (click)="consoleContent" [year]="tvShow.first_air_date || '' " [id]="tvShow.id || 0" [type]="'tv-show'">
       </app-content-card>
     </div>
   </div>

@@ -228,7 +228,7 @@ export class MovieDb {
     params: string | number | types.IdAppendToResponseRequest,
     axiosConfig?: AxiosRequestConfig,
   ): Promise<types.MovieResponse> {
-    return this.makeRequest(HttpMethod.Get, 'movie/:id', params, axiosConfig)
+    return this.makeRequest(HttpMethod.Get, 'movie/:id', params , axiosConfig)
   }
 
   movieAccountStates(
