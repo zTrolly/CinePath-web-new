@@ -1,0 +1,38 @@
+<div class="vw-100 vh-100" style="background-image: url('../../../assets/images/samuel-regan-asante-wMkaMXTJjlQ-unsplash.jpg'); display: flex; justify-content: center; align-content: center; background-size: cover; background-position: center;">
+  <div class="wrapper" style="background-color: rgba(0, 0, 0, 0.5); width: 100%; height: 100%;">
+    <div class="d-flex justify-content-center align-items-center h-100">
+      <div class="card" style="width: 70%; height: 50%; background-color: #252525; color: white;">
+        <div class="card-body" style="display: flex;">
+          <div class="esq-dir" style="width: 70%;">
+            <H1>Bem vindo ao Cinepath</H1>
+            <p>Uma plataforma para você encontrar os melhores filmes e séries para assistir.</p>
+            <p>Com o Cinepath você pode:</p>
+            <ul>
+              <li>Encontrar filmes e séries para assistir</li>
+              <li>Marcar filmes e séries como assistidos</li>
+              <li>Marcar filmes e séries como favoritos</li>
+              <li>Ver a lista de filmes e séries que você marcou como assistidos e favoritos</li>
+            </ul>
+          </div>
+          <div class="dir-login" style="width: 30%;">
+            <h5 class="card-title text-center">Iniciar Sessão</h5>
+            <form [formGroup]="isLogin? credentials : createAccount" (ngSubmit)="handleLogin()">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" formControlName="email" required>
+              </div>
+              <div class="form-group">
+                <label for="password">Senha</label>
+                <input type="password" class="form-control" id="password" formControlName="password" required>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-top: 1rem;">
+                <button type="button" class="btn btn-secondary" (click)="isLogin = !isLogin">{{isLogin ? 'Criar Conta' : 'Login'}}</button>
+                <button type="submit" class="btn btn-primary">{{isLogin? 'Entrar' : 'Criar'}}</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
