@@ -57,6 +57,10 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/search']);
   }
   
+  goToFavorite = () => {
+    this.router.navigate(['/favorites']);
+  }
+
   fetchAllMovieData = async () => {
     try {
       this.moviesPopular = await movieDb.moviePopular({language: 'pt-BR'});

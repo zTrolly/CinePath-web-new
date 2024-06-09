@@ -8,6 +8,8 @@ import { DatePipe, CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 
+import { AppService } from '../../services/appService';
+
 @Component({
   selector: 'app-movie-detail',
   standalone: true,
@@ -31,7 +33,7 @@ export class MovieDetailComponent implements OnInit {
 
   movieDb = new MovieDb(environment.api_key);
 
-  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private router: Router) {}
+  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private router: Router, private appService: AppService) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -138,5 +140,9 @@ export class MovieDetailComponent implements OnInit {
       return director ? director.name : '';
     }
     return '';
+  }
+
+  setFavorite = () => {
+    this.appService.addFavorite('movie', this.id)
   }
 }

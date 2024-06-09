@@ -5,13 +5,18 @@ import { environment } from '../../../environments/environment';
 import { AppService } from '../../services/appService';
 import { Router } from '@angular/router';
 
+import { CommonModule } from '@angular/common';
+import { ContentCardComponent } from '../../components/SimpleComponents/content-card/content-card.component';
+
+
 @Component({
   selector: 'app-favorites',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, ContentCardComponent],
   templateUrl: './favorites.component.html',
   styleUrl: './favorites.component.scss'
 })
+
 export class FavoritesComponent {
   movieDb = new MovieDb(environment.api_key);
   favorites: (MovieResult | ShowResponse)[] = [];
@@ -35,11 +40,19 @@ export class FavoritesComponent {
     this.subscribeToUser();
   }
 
+  isMovie(item: MovieResult | ShowResponse): item is MovieResult {
+    return (item as MovieResult).title !== undefined;
+  }
+
+  isShow(item: MovieResult | ShowResponse): item is ShowResponse {
+    return (item as ShowResponse).name !== undefined;
+  }
+
   private subscribeToUser(): void {
     this.appService.user$.subscribe(user => {
       if (user) {
         this.idUsuario = user.uid;  // Atualiza o ID do usuário quando o usuário está logado
-        console.log('User ID updated:', this.idUsuario);
+        // console.log('User ID updated:', this.idUsuario);
         this.fetchFavorites();
         this.fetchBookmarks();
         this.fetchWatchlist();
@@ -63,7 +76,7 @@ export class FavoritesComponent {
   fetchFavorites = async () => {
     if (this.idUsuario !== 'Não autenticado') {
       this.userFavorites = await this.appService.getFavorites();
-      console.log(this.userFavorites);
+      
       this.favorites = await Promise.all(this.userFavorites.map(async favorite => {
         if (favorite.mediaType === 'movie') {
           return await this.movieDb.movieInfo({id: favorite.mediaId, language: 'pt-BR'});
@@ -72,6 +85,7 @@ export class FavoritesComponent {
         }
       }));
     }
+    console.log('favoritos ---> ', this.favorites);
   }
 
   fetchBookmarks = async () => {

@@ -12,6 +12,10 @@
             </span>
           </h1>
           <p style="font-size: large; margin-top: 1rem; width: 100%;"><strong>Sinopse:</strong> {{ movieInfo.overview }}</p>
+          <div (click)="setFavorite()" style="display: flex; gap: 0.5rem; align-items: center; background-color: #BF89F2; padding: 10px; max-width: fit-content; border-radius: 8px; cursor: pointer">
+            <mat-icon aria-hidden="false" fontIcon="favorite" style="color: white; width: 30;"> </mat-icon>
+            <p style="font-size: large; color: white; margin-bottom: 0;">Adicionar aos Favoritos</p>
+          </div>
         </div>
 
         <div class="movie-detail__stats" style="display: flex; flex-direction: column; gap: 1rem; height: 70%; width: 20%; border-left: 1px solid white; padding-top: 1rem; padding-left: 1rem;">

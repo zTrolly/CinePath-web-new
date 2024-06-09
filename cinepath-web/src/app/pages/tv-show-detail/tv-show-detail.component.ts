@@ -8,6 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CreditsResponse, ShowResponse, TvKeywordsResponse, TvReviewsResponse, VideosResponse } from '../../types/request-types';
 
+import { AppService } from '../../services/appService';
+
 @Component({
   selector: 'app-tv-show-detail',
   standalone: true,
@@ -32,7 +34,7 @@ export class TvShowDetailComponent implements OnInit{
   videosUrls: SafeResourceUrl[] = [];
   ShowBackDrops: string[] = [];
 
-  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer) {}
+  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private appService: AppService) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -136,5 +138,9 @@ export class TvShowDetailComponent implements OnInit{
       return this.showCredits.crew.find(crew => crew.job === 'Director')?.name || '';
     }
     return '';
+  }
+
+  setFavorite = () => {
+    this.appService.addFavorite('tv-show', this.id)
   }
 }
