@@ -7,6 +7,8 @@ import { environment } from '../../../environments/environment';
 import { DatePipe, CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
+import { ChangeDetectorRef } from '@angular/core';
+
 
 import { AppService } from '../../services/appService';
 
@@ -22,6 +24,7 @@ export class MovieDetailComponent implements OnInit {
   routeParams: any;
   id!: number;
   backdropImg: string = '';
+  isMovieFavorite: boolean = false;
 
   movieInfo: MovieResponse | undefined;
   movieCredits: CreditsResponse | undefined;
@@ -33,7 +36,8 @@ export class MovieDetailComponent implements OnInit {
 
   movieDb = new MovieDb(environment.api_key);
 
-  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private router: Router, private appService: AppService) {}
+  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private router: Router, private appService: AppService,     private changeDetector: ChangeDetectorRef,
+  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -46,6 +50,7 @@ export class MovieDetailComponent implements OnInit {
         this.getMovieVideos();
       }
     });
+    this.isFavorite();
   }
 
   goToPersonDetail = (id: number) => {
@@ -145,4 +150,14 @@ export class MovieDetailComponent implements OnInit {
   setFavorite = () => {
     this.appService.addFavorite('movie', this.id)
   }
+
+  removeFavorite = () => {
+    this.appService.removeFavorite('movie', this.id)
+  }
+
+  isFavorite = async () => {
+    this.isMovieFavorite = await this.appService.isFavorite('movie', this.id);
+    this.changeDetector.detectChanges();
+}
+
 }

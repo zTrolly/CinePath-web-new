@@ -9,6 +9,7 @@ import { ContentListComponent } from '../../components/CompoundComponents/conten
 import { ContentListShowComponent } from '../../components/CompoundComponents/content-list-show/content-list-show.component';
 import { ContentCarrouselComponent } from '../../components/CompoundComponents/content-carrousel/content-carrousel.component';
 import { Router } from '@angular/router';
+import { AppService } from '../../services/appService';
 
 type HomeComponentRenderType = 'movie' | 'tv' | 'animation';
 const movieDb = new MovieDb(environment.api_key);
@@ -16,7 +17,7 @@ const movieDb = new MovieDb(environment.api_key);
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule,  MatListModule, ContentListComponent, ContentListShowComponent, ContentCarrouselComponent],
+  imports: [CommonModule,  MatListModule, ContentListComponent, ContentListShowComponent, ContentCarrouselComponent, ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
@@ -30,8 +31,20 @@ export class HomeComponent implements OnInit {
   tvPopular: TvResultsResponse | null = null;
   tvTopRated: TvResultsResponse | null = null;
   tvAiringToday: TvResultsResponse | null = null;
+  idUsuario: string = '1';
 
 
+  private subscribeToUser(): void {
+    this.appService.user$.subscribe(user => {
+      if (user) {
+        this.idUsuario = user.uid;  // Atualiza o ID do usuário quando o usuário está logado
+        console.log('User ID updated:', this.idUsuario);
+      } else {
+        this.idUsuario = 'Não autenticado';  // Definir como não autenticado ou similar
+        console.log('No user logged in.');
+      }
+    });
+  }
 
   getContentImg = (path: string) => `https://image.tmdb.org/t/p/w500${path}`;
   renderType: HomeComponentRenderType = 'movie';
@@ -113,10 +126,11 @@ export class HomeComponent implements OnInit {
   }
 console: any;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private appService: AppService) { }
 
   async ngOnInit() {
     await this.fetchAllMovieData();
     console.log(this.moviesPopular);
+    this.subscribeToUser();
   }
 }

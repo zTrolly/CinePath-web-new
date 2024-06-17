@@ -14,68 +14,16 @@ export class AppService {
   private user = new BehaviorSubject<User | null>(null);
 
   constructor(private firestore: Firestore, private auth: Auth) {
-    // Inicializa o BehaviorSubject com o usuário atual, se houver
     onAuthStateChanged(this.auth, (user) => {
-      if (user) {
-        this.user.next(user);
-      } else {
-        this.user.next(null);
-      }
+      this.user.next(user ? user : null);
     });
   }
 
   get user$(): Observable<User | null> {
     return this.user.asObservable();
   }
-  // begin ReviewService
-  // async addReview(review: IReview): Promise<void> {
-  //   const reviewDoc = await addDoc(collection(this.firestore, 'reviews'), review);
-  // }
 
-  // async addMockReview(): Promise<void> {
-  //   // const review: IReview = {
-  //   //   id: '1',
-  //   //   mediaType: 'movie',
-  //   //   mediaId: 823464,
-  //   //   rating: 5,
-  //   //   review: 'Great movie!',
-  //   //   createdAt: new Date()
-  //   // };
-  //   // await addDoc(collection(this.firestore, 'reviews'), review);
-  // }
-
-  // getReviews(): Observable<IReview[]> {
-  //   const reviewsCollection = collection(this.firestore, 'reviews');
-  //   const reviews = collectionData(reviewsCollection, {idField: 'id'}).pipe(
-  //     map(reviews => reviews.map(review => createReview(review as IReview)))
-  //   );
-  //   return reviews;
-  // }
-
-  // async deleteReview(reviewId: string): Promise<void> {
-  //   await deleteDoc(doc(this.firestore, 'reviews', reviewId));
-  // }
-
-  // async updateReview(reviewId: string, review: IReview): Promise<void> {
-  //   await setDoc(doc(this.firestore, 'reviews', reviewId), review);
-  // }
-
-  // async getReview(reviewId: string): Promise<IReview> {
-  //   const review = await getDocs(query(collection(this.firestore, 'reviews')));
-  //   const reviewData = review.docs.find(doc => doc.id === reviewId);
-  //   if (reviewData) {
-  //     return createReview(reviewData.data() as IReview);
-  //   } else {
-  //     throw new Error('Review not found');
-  //   }
-  // }
-  // end ReviewService
-
-  // begin AuthService 
   async registerUser(email: string, password: string): Promise<boolean> {
-    console.log('registerUser');
-    console.log(email);
-    console.log(password);
     try {
       const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
       this.user.next(userCredential.user);
@@ -105,7 +53,6 @@ export class AppService {
       console.error('Error logging out user:', error);
     }
   }
-
 
   // end AuthService
 

@@ -1,0 +1,9 @@
+<div style="background-color: #252525; color: white; padding: 1rem;">
+  <h1 mat-dialog-title>Alerta</h1>
+  <div mat-dialog-content>
+    <p>{{ data.message }}</p>
+  </div>
+  <div mat-dialog-actions style="display: flex; justify-content: flex-end;">
+    <button mat-button (click)="onClose()" class="alert-button">OK</button>
+  </div>
+</div>

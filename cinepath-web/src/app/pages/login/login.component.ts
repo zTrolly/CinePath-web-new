@@ -1,8 +1,14 @@
+// src/app/components/login/login.component.ts
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AppService } from '../../services/appService';
+import { emailValidator, passwordValidator } from '../../util/custom-validators'
+import { MatDialog } from '@angular/material/dialog';
+import { AlertDialogComponent } from '../../components/SimpleComponents/alert-dialog/alert-dialog.component';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +25,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder, 
     private appService: AppService, 
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ){}
 
   get email() {
@@ -32,13 +39,13 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.credentials = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      email: ['', [Validators.required, emailValidator()]],
+      password: ['', [Validators.required, passwordValidator()]]
     });
 
     this.createAccount = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      email: ['', [Validators.required, emailValidator()]],
+      password: ['', [Validators.required, passwordValidator()]]
     });
   }
 
@@ -48,58 +55,47 @@ export class LoginComponent implements OnInit {
 
   async register() {
     if (this.createAccount.valid) {
-      console.log('Register')
       const email = this.createAccount.get('email')?.value;
       const password = this.createAccount.get('password')?.value;
-      console.log('Register - Email:', email, 'Password:', password); // Depuração
       if (email && password) {
         try {
           const success = await this.appService.registerUser(email, password);
-          
           if (success) {
             this.router.navigateByUrl('home');
           } else {
-            console.error('Registration failed', 'Unable to register. Please try again.');
+            this.showAlert('Registration failed: Unable to register. Please try again.');
           }
         } catch (error) {
-          
-          console.error('Registration failed', 'An unexpected error occurred. Please try again.');
+          this.showAlert('Registration failed: An unexpected error occurred. Please try again.');
         }
       } else {
-        
-        console.error('Invalid input', 'Please provide valid email and password.');
+        this.showAlert('Invalid input: Please provide valid email and password.');
       }
     } else {
-      
-      console.error('Invalid input', 'Please provide valid email and password.');
+      this.showAlert('Invalid input: Please provide valid email and password.');
     }
   }
 
   async login() {
-
     if (this.credentials.valid) {
       const email = this.credentials.get('email')?.value;
       const password = this.credentials.get('password')?.value;
-      console.log('Login - Email:', email, 'Password:', password); // Depuração
       if (email && password) {
         try {
           const success = await this.appService.loginUser(email, password);
           if (success) {
             this.router.navigateByUrl('/tabs/tab1');
           } else {
-            console.error('Login failed', 'Unable to login. Please check your credentials and try again.');
+            this.showAlert('Login falhou: Não foi possível fazer login. Por favor, verifique suas credenciais e tente novamente.')
           }
         } catch (error) {
-          
-          console.error('Login failed', 'An unexpected error occurred. Please try again.');
+          this.showAlert( 'Login falhou: Ocorreu um erro inesperado. Por favor, tente novamente.')
         }
       } else {
-        
-        console.error('Invalid input', 'Please provide valid email and password.');
+        this.showAlert('Entrada inválida: Por favor, forneça um email e senha válidos.');
       }
     } else {
-      
-      console.error('Invalid input', 'Please provide valid email and password.');
+      this.showAlert('Entrada inválida: Por favor, forneça um email e senha válidos.');
     }
   }
 
@@ -111,5 +107,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
-
+  showAlert(message: string) {
+    this.dialog.open(AlertDialogComponent, {
+      data: { message }
+    });
+  }
 }

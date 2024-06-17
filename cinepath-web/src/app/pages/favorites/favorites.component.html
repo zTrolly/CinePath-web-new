@@ -23,10 +23,7 @@
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;" class="col-12">
                 <div *ngFor="let item of favorites">
                     <div *ngIf="isMovie(item)">
-                        <app-content-card class="col-md-2 mb-4" [title]="item.title || ''"
-                            [year]="item.release_date || ''" [rating]="item.vote_average || 0"
-                            [img]="item.poster_path ? 'https://image.tmdb.org/t/p/w500' + item.poster_path : 'assets/no-image.png'"
-                            [id]="item.id || 0" [type]="'movie'"></app-content-card>
+                        <app-content-card class="col-md-2 mb-4" [title]="item.title || ''" [year]="item.release_date || ''" [rating]="item.vote_average || 0" [img]="item.poster_path ? 'https://image.tmdb.org/t/p/w500' + item.poster_path : 'assets/no-image.png'" [id]="item.id || 0" [type]="'movie'"></app-content-card>
                     </div>
                 </div>
             </div>
@@ -36,12 +33,7 @@
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;" class="col-12">
                 <div *ngFor="let item of favorites">
                     <div *ngIf="isShow(item)">
-                        <app-content-card class="col-md-2 mb-4" [title]="item.name || ''"
-                            [year]="item.first_air_date || ''" [rating]="item.vote_average || 0"
-                            [img]="item.poster_path ? 'https://image.tmdb.org/t/p/w500' + item.poster_path : 'assets/no-image.png'"
-                            [id]="item.id || 0" [type]="'tv-show'"></app-content-card>
-
-
+                        <app-content-card class="col-md-2 mb-4" [title]="item.name || ''" [year]="item.first_air_date || ''" [rating]="item.vote_average || 0" [img]="item.poster_path ? 'https://image.tmdb.org/t/p/w500' + item.poster_path : 'assets/no-image.png'" [id]="item.id || 0" [type]="'tv-show'"></app-content-card>
                     </div>
                 </div>
             </div>
