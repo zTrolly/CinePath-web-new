@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MovieDb } from '../../services/movieDb';
@@ -33,8 +33,9 @@ export class TvShowDetailComponent implements OnInit{
   videos: VideosResponse | undefined;
   videosUrls: SafeResourceUrl[] = [];
   ShowBackDrops: string[] = [];
+  isShowFavorite: boolean = false;
 
-  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private appService: AppService) {}
+  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private appService: AppService, private changeDetector: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -142,5 +143,29 @@ export class TvShowDetailComponent implements OnInit{
 
   setFavorite = () => {
     this.appService.addFavorite('tv-show', this.id)
+      .then(() => {
+        this.isShowFavorite = true;
+        this.changeDetector.detectChanges();
+      })
+      .catch(error => {
+        console.error('Erro ao adicionar favorito:', error);
+      });
+  }
+  
+  removeFavorite = () => {
+    this.appService.removeFavorite('tv-show', this.id)
+      .then(() => {
+        this.isShowFavorite = false;
+        this.changeDetector.detectChanges();
+      })
+      .catch(error => {
+        console.error('Erro ao remover favorito:', error);
+      });
+
+  }
+
+  isFavorite = async () => {
+    this.isShowFavorite = await this.appService.isFavorite('tv-show', this.id);
+    this.changeDetector.detectChanges();
   }
 }

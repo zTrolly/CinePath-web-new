@@ -63,16 +63,16 @@ export class LoginComponent implements OnInit {
           if (success) {
             this.router.navigateByUrl('home');
           } else {
-            this.showAlert('Registration failed: Unable to register. Please try again.');
+            this.showAlert('Registro falhou: Não foi possível registrar. Por favor, tente novamente.')
           }
         } catch (error) {
-          this.showAlert('Registration failed: An unexpected error occurred. Please try again.');
+          this.showAlert('Registro falhou: Ocorreu um erro inesperado. Por favor, tente novamente.')
         }
       } else {
-        this.showAlert('Invalid input: Please provide valid email and password.');
+        this.showAlert('Entrada inválida: Por favor, forneça um email e senha válidos.');
       }
     } else {
-      this.showAlert('Invalid input: Please provide valid email and password.');
+      this.showAlert('Entrada inválida: Por favor, forneça um email e senha válidos.');
     }
   }
 
@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit {
         try {
           const success = await this.appService.loginUser(email, password);
           if (success) {
-            this.router.navigateByUrl('/tabs/tab1');
+            this.router.navigateByUrl('/home');
           } else {
             this.showAlert('Login falhou: Não foi possível fazer login. Por favor, verifique suas credenciais e tente novamente.')
           }

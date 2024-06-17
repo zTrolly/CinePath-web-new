@@ -148,12 +148,18 @@ export class MovieDetailComponent implements OnInit {
   }
 
   setFavorite = () => {
-    this.appService.addFavorite('movie', this.id)
-  }
-
+    this.appService.addFavorite('movie', this.id).then(() => {
+      this.isMovieFavorite =!this.isMovieFavorite; // Alterna o estado de favorito
+      this.changeDetector.detectChanges(); // Notifica o Angular para verificar novamente o componente
+    });
+  };
+  
   removeFavorite = () => {
-    this.appService.removeFavorite('movie', this.id)
-  }
+    this.appService.removeFavorite('movie', this.id).then(() => {
+      this.isMovieFavorite =!this.isMovieFavorite; // Alterna o estado de favorito
+      this.changeDetector.detectChanges(); // Notifica o Angular para verificar novamente o componente
+    });
+  };
 
   isFavorite = async () => {
     this.isMovieFavorite = await this.appService.isFavorite('movie', this.id);
